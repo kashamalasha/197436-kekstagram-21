@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Бурнышев](https://up.htmlacademy.ru/javascript/21/user/197436).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Александрович](https://htmlacademy.ru/profile/id1378855).
 
 ---
 
