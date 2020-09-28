@@ -35,5 +35,6 @@
   };
 
   picturesElement.appendChild(renderPhotos(photosArray));
+  window.picture.renderPicture(photosArray[0]);
 
 })();
