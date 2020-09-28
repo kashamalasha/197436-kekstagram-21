@@ -29,7 +29,7 @@
 
   let renderPicture = function (data) {
 
-    let image = pictureElement.querySelector(`.big-picture__img`).querySelector(`img`);
+    let image = pictureElement.querySelector(`.big-picture__img img`);
     let likesCount = pictureElement.querySelector(`.likes-count`);
     let commentsCount = pictureElement.querySelector(`.comments-count`);
     let comments = pictureElement.querySelector(`.social__comments`);
