@@ -3,8 +3,8 @@
 (function () {
   let pictureElement = document.querySelector(`.big-picture`);
 
-  let renderText = function (element, data, text) {
-    if (data) {
+  let renderText = function (element, text) {
+    if (text) {
       element.textContent = text;
     } else {
       element.style.display = `none`;
@@ -44,9 +44,9 @@
     let description = pictureElement.querySelector(`.social__caption`);
 
     image.src = data.url;
-    renderText(likesCount, data.likes, data.likes);
-    renderText(commentsCount, data.comments.length, data.comments.length);
-    renderText(description, data.description, data.description);
+    renderText(likesCount, data.likes);
+    renderText(commentsCount, data.comments.length);
+    renderText(description, data.description);
     renderComments(comments, data.comments);
 
     document.body.classList.add(`modal-open`);
