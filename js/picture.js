@@ -3,14 +3,6 @@
 (function () {
   let pictureElement = document.querySelector(`.big-picture`);
 
-  let renderText = function (element, text) {
-    if (text) {
-      element.textContent = text;
-    } else {
-      element.style.display = `none`;
-    }
-  };
-
   let renderComments = function (element, arr) {
     let comment = element.querySelector(`.social__comment`);
     let fragment = document.createDocumentFragment();
@@ -31,7 +23,7 @@
       fragment.appendChild(record);
     }
 
-    window.domUtil.removeChildren(element);
+    element.innerHTML = ``;
     element.appendChild(fragment);
   };
 
@@ -44,9 +36,9 @@
     let description = pictureElement.querySelector(`.social__caption`);
 
     image.src = data.url;
-    renderText(likesCount, data.likes);
-    renderText(commentsCount, data.comments.length);
-    renderText(description, data.description);
+    likesCount.textContent = data.likes;
+    commentsCount.textContent = data.comments.length;
+    description.textContent = data.description;
     renderComments(comments, data.comments);
 
     document.body.classList.add(`modal-open`);
