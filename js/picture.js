@@ -49,9 +49,12 @@
     renderText(description, data.description, data.description);
     renderComments(comments, data.comments);
 
-    pictureElement.classList.remove(`hidden`);
-
+    document.body.classList.add(`modal-open`);
   };
+
+  pictureElement.querySelector(`.social__comment-count`).classList.add(`hidden`);
+  pictureElement.querySelector(`.comments-loader`).classList.add(`hidden`);
+  pictureElement.classList.remove(`hidden`);
 
   window.picture = {
     renderPicture
