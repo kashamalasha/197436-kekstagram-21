@@ -26,6 +26,7 @@
     window.effects.form.effectSlider.classList.add(`hidden`);
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
+    form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
     document.addEventListener(`keydown`, onUploadEscPress);
   };
 
@@ -35,6 +36,7 @@
     uploadDialog.value = ``;
 
     form.effects.removeEventListener(`change`, window.effects.onEffectChange);
+    form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
     document.removeEventListener(`keydown`, onUploadEscPress);
   };
 
