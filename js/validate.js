@@ -2,10 +2,10 @@
 
 (function () {
 
-  const HASHTAG_REGEX = /^#[a-zA-Z]+$/;
+  const HASHTAG_REGEX = /^#[a-zA-Zа-яА-Я|\d]+$/;
   const HashtagParams = {
     MAX_TAGS: 5,
-    MIN_LENGTH: 2,
+    MIN_LENGTH: 1,
     MAX_LENGTH: 20
   };
 
@@ -20,21 +20,20 @@
   };
 
   let checkHashtags = function () {
-    let tags = form.hashtags.value.trim().toLowerCase().split(` `);
-
-    if (tags) {
+    if (form.hashtags.value) {
+      let tags = form.hashtags.value.trim().toLowerCase().split(` `);
       if (tags.length > HashtagParams.MAX_TAGS) {
         form.hashtags.setCustomValidity(`Количество хэштэгов не должно превышать 5`);
       } else if (hasDuplicates(tags)) {
         form.hashtags.setCustomValidity(`Хэштэги не должны повторяться`);
       } else {
         for (let tag of tags) {
-          if (!HASHTAG_REGEX.test(tag)) {
-            form.hashtags.setCustomValidity(`Хэштэг "` + tag + `" не соответствует правилам оформления`);
-          } else if (tag.length === HashtagParams.MIN_LENGTH) {
+          if (tag.length === HashtagParams.MIN_LENGTH) {
             form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть меньше ` + HashtagParams.MIN_LENGTH);
-          } else if (tag.length > HashtagParams.MAX_LENGTH + 1) {
+          } else if (tag.length > HashtagParams.MAX_LENGTH) {
             form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть больше ` + HashtagParams.MAX_LENGTH);
+          } else if (!HASHTAG_REGEX.test(tag)) {
+            form.hashtags.setCustomValidity(`Хэштэг "` + tag + `" не соответствует правилам оформления`);
           }
         }
       }
