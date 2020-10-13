@@ -3,8 +3,9 @@
 (function () {
   let pictureElement = document.querySelector(`.big-picture`);
 
-  let renderComments = function (element, arr) {
-    let comment = element.querySelector(`.social__comment`);
+  let renderComments = function (arr) {
+    let comments = pictureElement.querySelector(`.social__comments`);
+    let comment = comments.querySelector(`.social__comment`);
     let fragment = document.createDocumentFragment();
 
     if (arr.length > 5) {
@@ -23,8 +24,8 @@
       fragment.appendChild(record);
     }
 
-    element.innerHTML = ``;
-    element.appendChild(fragment);
+    comments.innerHTML = ``;
+    comments.appendChild(fragment);
   };
 
   let renderPicture = function (data) {
@@ -32,21 +33,20 @@
     let image = pictureElement.querySelector(`.big-picture__img img`);
     let likesCount = pictureElement.querySelector(`.likes-count`);
     let commentsCount = pictureElement.querySelector(`.comments-count`);
-    let comments = pictureElement.querySelector(`.social__comments`);
     let description = pictureElement.querySelector(`.social__caption`);
 
     image.src = data.url;
     likesCount.textContent = data.likes;
     commentsCount.textContent = data.comments.length;
     description.textContent = data.description;
-    renderComments(comments, data.comments);
+    renderComments(data.comments);
 
     document.body.classList.add(`modal-open`);
-  };
 
-  pictureElement.querySelector(`.social__comment-count`).classList.add(`hidden`);
-  pictureElement.querySelector(`.comments-loader`).classList.add(`hidden`);
-  pictureElement.classList.remove(`hidden`);
+    pictureElement.querySelector(`.social__comment-count`).classList.add(`hidden`);
+    pictureElement.querySelector(`.comments-loader`).classList.add(`hidden`);
+    pictureElement.classList.remove(`hidden`);
+  };
 
   window.picture = {
     renderPicture
