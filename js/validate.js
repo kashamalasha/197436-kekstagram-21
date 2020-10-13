@@ -20,32 +20,38 @@
   };
 
   let checkHashtags = function () {
-    let hashtagArr = form.hashtags.value.trim().toLowerCase().split(` `);
+    let tags = form.hashtags.value.trim().toLowerCase().split(` `);
 
-    if (hashtagArr.length > HashtagParams.MAX_TAGS) {
-      form.hashtags.setCustomValidity(`Количество хэштэгов не должно превышать 5`);
-      form.hashtags.reportValidity();
-    } else if (hasDuplicates(hashtagArr)) {
-      form.hashtags.setCustomValidity(`Хэштэги не должны повторяться`);
-      form.hashtags.reportValidity();
-    } else {
-      for (let tag of hashtagArr) {
-        if (!HASHTAG_REGEX.test(tag)) {
-          form.hashtags.setCustomValidity(`Хэштэг "` + tag + `" не соответствует правилам оформления`);
-          form.hashtags.reportValidity();
-        } else if (tag.length === HashtagParams.MIN_LENGTH) {
-          form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть меньше ` + HashtagParams.MIN_LENGTH);
-          form.hashtags.reportValidity();
-        } else if (tag.length > HashtagParams.MAX_LENGTH + 1) {
-          form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть больше ` + HashtagParams.MAX_LENGTH);
-          form.hashtags.reportValidity();
+    if (tags) {
+      if (tags.length > HashtagParams.MAX_TAGS) {
+        form.hashtags.setCustomValidity(`Количество хэштэгов не должно превышать 5`);
+      } else if (hasDuplicates(tags)) {
+        form.hashtags.setCustomValidity(`Хэштэги не должны повторяться`);
+      } else {
+        for (let tag of tags) {
+          if (!HASHTAG_REGEX.test(tag)) {
+            form.hashtags.setCustomValidity(`Хэштэг "` + tag + `" не соответствует правилам оформления`);
+          } else if (tag.length === HashtagParams.MIN_LENGTH) {
+            form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть меньше ` + HashtagParams.MIN_LENGTH);
+          } else if (tag.length > HashtagParams.MAX_LENGTH + 1) {
+            form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть больше ` + HashtagParams.MAX_LENGTH);
+          }
         }
       }
+    } else {
+      form.hashtags.setCustomValidity(``);
     }
+    form.hashtags.reportValidity();
+  };
+
+  let clearValidity = function () {
+    form.hashtags.setCustomValidity(``);
+    form.hashtags.reportValidity();
   };
 
   window.validate = {
-    checkHashtags
+    checkHashtags,
+    clearValidity
   };
 
 })();

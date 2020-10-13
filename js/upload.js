@@ -27,6 +27,7 @@
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
+    form.hashtags.addEventListener(`input`, window.validate.clearValidity);
     document.addEventListener(`keydown`, onUploadEscPress);
   };
 
@@ -37,6 +38,7 @@
 
     form.effects.removeEventListener(`change`, window.effects.onEffectChange);
     form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
+    form.hashtags.removeEventListener(`input`, window.validate.clearValidity);
     document.removeEventListener(`keydown`, onUploadEscPress);
   };
 
