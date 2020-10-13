@@ -35,6 +35,27 @@
   };
 
   picturesElement.appendChild(renderPhotos(photosArray));
-  // window.picture.renderPicture(photosArray[0]);
+
+  let renderPicture = function (data) {
+    const re = /(\d+)/;
+
+    let photoSrc = data.getAttribute(`src`);
+    let photoNum = photoSrc.match(re)[0];
+
+    window.picture.renderPicture(photosArray[photoNum - 1]);
+  };
+
+  let onPictureEnterPress = function (evt) {
+    evt.preventDefault();
+    renderPicture(evt.target.querySelector(`img`));
+  };
+
+  picturesElement.addEventListener(`click`, function (evt) {
+    renderPicture(evt.target);
+  });
+
+  picturesElement.addEventListener(`keydown`, function (evt) {
+    window.util.onEnterPress(evt, onPictureEnterPress);
+  });
 
 })();

@@ -34,6 +34,7 @@
     let likesCount = pictureElement.querySelector(`.likes-count`);
     let commentsCount = pictureElement.querySelector(`.comments-count`);
     let description = pictureElement.querySelector(`.social__caption`);
+    let closeModal = pictureElement.querySelector(`.big-picture__cancel`);
 
     image.src = data.url;
     likesCount.textContent = data.likes;
@@ -46,6 +47,18 @@
     pictureElement.querySelector(`.social__comment-count`).classList.add(`hidden`);
     pictureElement.querySelector(`.comments-loader`).classList.add(`hidden`);
     pictureElement.classList.remove(`hidden`);
+
+    document.addEventListener(`keydown`, onPictureEscPress);
+    closeModal.addEventListener(`click`, closePicture);
+  };
+
+  let closePicture = function () {
+    pictureElement.classList.add(`hidden`);
+    pictureElement.classList.remove(`modal-open`);
+  };
+
+  let onPictureEscPress = function (evt) {
+    window.util.onEscPress(evt, closePicture);
   };
 
   window.picture = {

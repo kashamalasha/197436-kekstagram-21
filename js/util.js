@@ -30,7 +30,7 @@
 
   let onEnterPress = function (evt, action) {
     if (evt.key === Keys.ENTER.keyName) {
-      action();
+      action(evt);
     }
   };
 
