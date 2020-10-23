@@ -9,7 +9,31 @@
     effectSlider: imgUpload.querySelector(`.img-upload__effect-level`),
     effectLevelPin: imgUpload.querySelector(`.effect-level__pin`),
     effectLevelLine: imgUpload.querySelector(`.effect-level__line`),
-    effectLevelDepth: imgUpload.querySelector(`.effect-level__depth`)
+    effectLevelDepth: imgUpload.querySelector(`.effect-level__depth`),
+    scaleValue: imgUpload.querySelector(`.scale__control--value`)
+  };
+
+  let setScaleFactor = function (evt) {
+    const REGEX = /(\d+)/;
+    let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
+
+    switch (true) {
+      case evt.target.classList.contains(`scale__control--bigger`):
+        value += 25;
+        break;
+      case evt.target.classList.contains(`scale__control--smaller`):
+        value -= 25;
+        break;
+    }
+
+    if (value > 100) {
+      value = 100;
+    } else if (value < 25) {
+      value = 25;
+    }
+
+    form.scaleValue.value = value + `%`;
+    form.imgUploadPreview.style.transform = `scale(` + (value / 100) + `)`;
   };
 
   let getCurrentPinPosition = function () {
@@ -101,7 +125,8 @@
   window.effects = {
     form,
     onEffectsChange,
-    setEffectIntencity
+    setEffectIntencity,
+    setScaleFactor
   };
 
 })();

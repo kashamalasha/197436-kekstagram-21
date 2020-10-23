@@ -54,10 +54,10 @@
   };
 
   let showPreview = function (thumbnail, data) {
-    const re = /(\d+)/;
+    const REGEX = /(\d+)/;
 
     let photoSrc = thumbnail.getAttribute(`src`);
-    let photoNum = photoSrc.match(re)[0];
+    let photoNum = photoSrc.match(REGEX)[0];
 
     renderPicture(data[photoNum - 1]);
   };

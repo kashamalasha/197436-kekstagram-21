@@ -10,7 +10,9 @@
   let form = {
     hashtags: imgUpload.querySelector(`.text__hashtags`),
     description: imgUpload.querySelector(`.text__description`),
-    effects: imgUpload.querySelector(`.img-upload__effects`)
+    effects: imgUpload.querySelector(`.img-upload__effects`),
+    scaleValue: imgUpload.querySelector(`.img-upload__scale input`),
+    scaleButtons: imgUpload.querySelectorAll(`.img-upload__scale button`)
   };
 
   let onUploadEscPress = function (evt) {
@@ -24,11 +26,16 @@
     uploadImgOverlay.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
     window.effects.form.effectSlider.classList.add(`hidden`);
+    form.scaleValue.value = `100%`;
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.addEventListener(`input`, window.validate.clearValidity);
     document.addEventListener(`keydown`, onUploadEscPress);
+
+    for (let button of form.scaleButtons) {
+      button.addEventListener(`click`, window.effects.setScaleFactor);
+    }
   };
 
   let closeUpload = function () {
@@ -40,6 +47,10 @@
     form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.removeEventListener(`input`, window.validate.clearValidity);
     document.removeEventListener(`keydown`, onUploadEscPress);
+
+    for (let button of form.scaleButtons) {
+      button.removeEventListener(`click`, window.effects.setScaleFactor);
+    }
   };
 
   uploadDialog.addEventListener(`change`, function () {
