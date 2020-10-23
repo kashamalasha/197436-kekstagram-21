@@ -52,25 +52,26 @@
 
   let setEffectIntencity = function () {
     let pinPosition = getCurrentPinPosition();
-    let fraction = pinPosition.toFixed(1);
-    let percent = (pinPosition.toFixed(2) * 100) + `%`;
-    let pixel = (3 / 100) * (pinPosition.toFixed(2) * 100) + `px`;
+    let percentValue = (pinPosition.toFixed(2) * 100);
+    let intervalZeroOne = pinPosition.toFixed(1);
+    let intervalZeroThree = (3 / 100) * (pinPosition.toFixed(2) * 100);
+    let intervalOneThree = (2 / 100) * (pinPosition.toFixed(2) * 100) + 1;
 
     switch (true) {
       case form.imgUploadPreview.classList.contains(`effects__preview--chrome`):
-        form.imgUploadPreview.style.filter = `grayscale(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `grayscale(` + intervalZeroOne + `)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--sepia`):
-        form.imgUploadPreview.style.filter = `sepia(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `sepia(` + intervalZeroOne + `)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--marvin`):
-        form.imgUploadPreview.style.filter = `invert(` + percent + `)`;
+        form.imgUploadPreview.style.filter = `invert(` + percentValue + `%)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--phobos`):
-        form.imgUploadPreview.style.filter = `blur(` + pixel + `)`;
+        form.imgUploadPreview.style.filter = `blur(` + intervalZeroThree + `px)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--heat`):
-        form.imgUploadPreview.style.filter = `brightness(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `brightness(` + intervalOneThree + `)`;
         break;
       default:
         form.imgUploadPreview.style.filter = ``;
