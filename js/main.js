@@ -36,22 +36,17 @@
 
   picturesElement.appendChild(renderPhotos(photosArray));
 
-  let renderPicture = function (data) {
-    const re = /(\d+)/;
-
-    let photoSrc = data.getAttribute(`src`);
-    let photoNum = photoSrc.match(re)[0];
-
-    window.picture.renderPicture(photosArray[photoNum - 1]);
-  };
-
   let onPictureEnterPress = function (evt) {
     evt.preventDefault();
-    renderPicture(evt.target.querySelector(`img`));
+    if (evt.target.className === `picture`) {
+      window.picture.showPreview(evt.target.querySelector(`img`), photosArray);
+    }
   };
 
   picturesElement.addEventListener(`click`, function (evt) {
-    renderPicture(evt.target);
+    if (evt.target.className === `picture__img`) {
+      window.picture.showPreview(evt.target, photosArray);
+    }
   });
 
   picturesElement.addEventListener(`keydown`, function (evt) {

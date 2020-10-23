@@ -20,8 +20,14 @@
     return position.depth / position.width;
   };
 
-  let setEffectIntencity = function (evt) {
-    let pinPosition = evt ? getCurrentPinPosition() : 0;
+  let setMaxPinPosition = function () {
+    let maxPinPosition = form.effectLevelLine.clientWidth;
+    window.effects.form.effectLevelPin.style.left = maxPinPosition + `px`;
+    window.effects.form.effectLevelDepth.style.width = maxPinPosition + `px`;
+  };
+
+  let setEffectIntencity = function () {
+    let pinPosition = getCurrentPinPosition();
     let fraction = pinPosition.toFixed(1);
     let percent = (pinPosition.toFixed(2) * 100) + `%`;
     let pixel = (3 / 100) * (pinPosition.toFixed(2) * 100) + `px`;
@@ -88,12 +94,14 @@
 
   let onEffectsChange = function (evt) {
     setEffectStyle(evt.target);
+    setMaxPinPosition();
     setEffectIntencity();
   };
 
   window.effects = {
     form,
-    onEffectsChange
+    onEffectsChange,
+    setEffectIntencity
   };
 
 })();
