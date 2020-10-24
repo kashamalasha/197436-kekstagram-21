@@ -3,6 +3,7 @@
 (function () {
   let pictureElement = document.querySelector(`.big-picture`);
 
+
   let renderComments = function (arr) {
     let comments = pictureElement.querySelector(`.social__comments`);
     let comment = comments.querySelector(`.social__comment`);
@@ -52,6 +53,15 @@
     closeModal.addEventListener(`click`, closePicture);
   };
 
+  let showPreview = function (thumbnail, data) {
+    const REGEX = /(\d+)/;
+
+    let photoSrc = thumbnail.getAttribute(`src`);
+    let photoNum = photoSrc.match(REGEX)[0];
+
+    renderPicture(data[photoNum - 1]);
+  };
+
   let closePicture = function () {
     pictureElement.classList.add(`hidden`);
     pictureElement.classList.remove(`modal-open`);
@@ -62,7 +72,7 @@
   };
 
   window.picture = {
-    renderPicture
+    showPreview
   };
 
 })();

@@ -9,7 +9,31 @@
     effectSlider: imgUpload.querySelector(`.img-upload__effect-level`),
     effectLevelPin: imgUpload.querySelector(`.effect-level__pin`),
     effectLevelLine: imgUpload.querySelector(`.effect-level__line`),
-    effectLevelDepth: imgUpload.querySelector(`.effect-level__depth`)
+    effectLevelDepth: imgUpload.querySelector(`.effect-level__depth`),
+    scaleValue: imgUpload.querySelector(`.scale__control--value`)
+  };
+
+  let setScaleFactor = function (evt) {
+    const REGEX = /(\d+)/;
+    let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
+
+    switch (true) {
+      case evt.target.classList.contains(`scale__control--bigger`):
+        value += 25;
+        break;
+      case evt.target.classList.contains(`scale__control--smaller`):
+        value -= 25;
+        break;
+    }
+
+    if (value > 100) {
+      value = 100;
+    } else if (value < 25) {
+      value = 25;
+    }
+
+    form.scaleValue.value = value + `%`;
+    form.imgUploadPreview.style.transform = `scale(` + (value / 100) + `)`;
   };
 
   let getCurrentPinPosition = function () {
@@ -20,27 +44,34 @@
     return position.depth / position.width;
   };
 
-  let setEffectIntencity = function (evt) {
-    let pinPosition = evt ? getCurrentPinPosition() : 0;
-    let fraction = pinPosition.toFixed(1);
-    let percent = (pinPosition.toFixed(2) * 100) + `%`;
-    let pixel = (3 / 100) * (pinPosition.toFixed(2) * 100) + `px`;
+  let setMaxPinPosition = function () {
+    let maxPinPosition = form.effectLevelLine.clientWidth;
+    window.effects.form.effectLevelPin.style.left = maxPinPosition + `px`;
+    window.effects.form.effectLevelDepth.style.width = maxPinPosition + `px`;
+  };
+
+  let setEffectIntencity = function () {
+    let pinPosition = getCurrentPinPosition();
+    let percentValue = (pinPosition.toFixed(2) * 100);
+    let intervalZeroOne = pinPosition.toFixed(1);
+    let intervalZeroThree = (3 / 100) * (pinPosition.toFixed(2) * 100);
+    let intervalOneThree = (2 / 100) * (pinPosition.toFixed(2) * 100) + 1;
 
     switch (true) {
       case form.imgUploadPreview.classList.contains(`effects__preview--chrome`):
-        form.imgUploadPreview.style.filter = `grayscale(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `grayscale(` + intervalZeroOne + `)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--sepia`):
-        form.imgUploadPreview.style.filter = `sepia(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `sepia(` + intervalZeroOne + `)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--marvin`):
-        form.imgUploadPreview.style.filter = `invert(` + percent + `)`;
+        form.imgUploadPreview.style.filter = `invert(` + percentValue + `%)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--phobos`):
-        form.imgUploadPreview.style.filter = `blur(` + pixel + `)`;
+        form.imgUploadPreview.style.filter = `blur(` + intervalZeroThree + `px)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--heat`):
-        form.imgUploadPreview.style.filter = `brightness(` + fraction + `)`;
+        form.imgUploadPreview.style.filter = `brightness(` + intervalOneThree + `)`;
         break;
       default:
         form.imgUploadPreview.style.filter = ``;
@@ -88,12 +119,15 @@
 
   let onEffectsChange = function (evt) {
     setEffectStyle(evt.target);
+    setMaxPinPosition();
     setEffectIntencity();
   };
 
   window.effects = {
     form,
-    onEffectsChange
+    onEffectsChange,
+    setEffectIntencity,
+    setScaleFactor
   };
 
 })();
