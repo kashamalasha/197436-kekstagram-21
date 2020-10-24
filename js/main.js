@@ -2,55 +2,35 @@
 
 (function () {
 
-  const MOCK_QUANTIY = 25;
+  const PHOTO_QUANTITY = 25;
 
-  let photosArray = window.data.generateMockPhotos(MOCK_QUANTIY);
-  let picturesElement = document.querySelector(`.pictures`);
+  let onSuccess = function (arr) {
+    let thumbnails = document.querySelector(`.pictures`);
+    let photosArray = arr.slice(0, PHOTO_QUANTITY);
 
-  let photoTemplate = document.querySelector(`#picture`)
-    .content
-    .querySelector(`.picture`);
-
-  let renderPhoto = function (obj) {
-    let photo = photoTemplate.cloneNode(true);
-    let image = photo.querySelector(`.picture__img`);
-    let comments = photo.querySelector(`.picture__comments`);
-    let likes = photo.querySelector(`.picture__likes`);
-
-    image.src = obj.url;
-    likes.textContent = obj.likes;
-    comments.textContent = obj.comments.length;
-
-    return photo;
+    thumbnails.appendChild(window.thumbnails.renderPhotos(photosArray));
   };
 
-  let renderPhotos = function (arr) {
-    let fragment = document.createDocumentFragment();
+  let onError = function (errorMessage) {
+    let errorTemplate = document.querySelector(`#error`)
+      .content
+      .querySelector(`.error`);
 
-    for (let i = 0; i < arr.length; i++) {
-      fragment.appendChild(renderPhoto(arr[i]));
-    }
+    let errorParent = document.querySelector(`main`);
+    let errorPopup = errorTemplate.cloneNode(true);
+    let errorTitle = errorPopup.querySelector(`.error__title`);
+    let errorClose = errorPopup.querySelector(`.error__button`);
 
-    return fragment;
+    errorTitle.textContent = errorMessage;
+    errorClose.textContent = `Закрыть`;
+
+    errorClose.addEventListener(`click`, function () {
+      errorParent.removeChild(errorPopup);
+    });
+
+    errorParent.appendChild(errorPopup);
   };
 
-  picturesElement.appendChild(renderPhotos(photosArray));
-
-  let onPictureEnterPress = function (evt) {
-    evt.preventDefault();
-    if (evt.target.className === `picture`) {
-      window.picture.showPreview(evt.target.querySelector(`img`), photosArray);
-    }
-  };
-
-  picturesElement.addEventListener(`click`, function (evt) {
-    if (evt.target.className === `picture__img`) {
-      window.picture.showPreview(evt.target, photosArray);
-    }
-  });
-
-  picturesElement.addEventListener(`keydown`, function (evt) {
-    window.util.onEnterPress(evt, onPictureEnterPress);
-  });
+  window.backend.load(onSuccess, onError);
 
 })();
