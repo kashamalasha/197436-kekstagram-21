@@ -23,7 +23,7 @@
           onLoad(xhr.response);
           break;
         default:
-          onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
+          onError(`Статус ответа: ${xhr.status} - ${xhr.statusText}`);
           break;
       }
     });
@@ -33,7 +33,7 @@
     });
 
     xhr.addEventListener(`timeout`, function () {
-      onError(`Таймаут: ` + xhr.timeout + `мс.`);
+      onError(`Таймаут: ${xhr.timeout} мс.`);
     });
 
     xhr.timeout = TIMEOUT;

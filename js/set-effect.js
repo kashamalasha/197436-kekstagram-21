@@ -32,8 +32,8 @@
           window.effects.form.effectLevelPin.style.left = `0`;
           window.effects.form.effectLevelDepth.style.width = `0`;
         } else if (pointerPosition <= lineWidth) {
-          window.effects.form.effectLevelPin.style.left = pointerPosition + `px`;
-          window.effects.form.effectLevelDepth.style.width = pointerPosition + `px`;
+          window.effects.form.effectLevelPin.style.left = `${pointerPosition}px`;
+          window.effects.form.effectLevelDepth.style.width = `${pointerPosition}px`;
         }
         window.effects.setEffectIntencity(moveEvt);
       }

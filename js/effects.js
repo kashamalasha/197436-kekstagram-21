@@ -32,8 +32,8 @@
       value = 25;
     }
 
-    form.scaleValue.value = value + `%`;
-    form.imgUploadPreview.style.transform = `scale(` + (value / 100) + `)`;
+    form.scaleValue.value = `${value} %`;
+    form.imgUploadPreview.style.transform = `scale(${value / 100})`;
   };
 
   let getCurrentPinPosition = function () {
@@ -46,8 +46,8 @@
 
   let setMaxPinPosition = function () {
     let maxPinPosition = form.effectLevelLine.clientWidth;
-    window.effects.form.effectLevelPin.style.left = maxPinPosition + `px`;
-    window.effects.form.effectLevelDepth.style.width = maxPinPosition + `px`;
+    window.effects.form.effectLevelPin.style.left = `${maxPinPosition} px`;
+    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition} px`;
   };
 
   let setEffectIntencity = function () {
@@ -59,19 +59,19 @@
 
     switch (true) {
       case form.imgUploadPreview.classList.contains(`effects__preview--chrome`):
-        form.imgUploadPreview.style.filter = `grayscale(` + intervalZeroOne + `)`;
+        form.imgUploadPreview.style.filter = `grayscale(${intervalZeroOne})`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--sepia`):
-        form.imgUploadPreview.style.filter = `sepia(` + intervalZeroOne + `)`;
+        form.imgUploadPreview.style.filter = `sepia(${intervalZeroOne})`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--marvin`):
-        form.imgUploadPreview.style.filter = `invert(` + percentValue + `%)`;
+        form.imgUploadPreview.style.filter = `invert(${percentValue}%)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--phobos`):
-        form.imgUploadPreview.style.filter = `blur(` + intervalZeroThree + `px)`;
+        form.imgUploadPreview.style.filter = `blur(${intervalZeroThree}px)`;
         break;
       case form.imgUploadPreview.classList.contains(`effects__preview--heat`):
-        form.imgUploadPreview.style.filter = `brightness(` + intervalOneThree + `)`;
+        form.imgUploadPreview.style.filter = `brightness(${intervalOneThree})`;
         break;
       default:
         form.imgUploadPreview.style.filter = ``;
