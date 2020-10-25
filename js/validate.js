@@ -29,11 +29,11 @@
       } else {
         for (let tag of tags) {
           if (tag.length === HashtagParams.MIN_LENGTH) {
-            form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть меньше ` + HashtagParams.MIN_LENGTH);
+            form.hashtags.setCustomValidity(`Длина хэштэга "${tag}" не должна быть меньше ${HashtagParams.MIN_LENGTH}`);
           } else if (tag.length > HashtagParams.MAX_LENGTH) {
-            form.hashtags.setCustomValidity(`Длина хэштэга "` + tag + `" не должна быть больше ` + HashtagParams.MAX_LENGTH);
+            form.hashtags.setCustomValidity(`Длина хэштэга "${tag}" не должна быть больше ${HashtagParams.MAX_LENGTH}`);
           } else if (!HASHTAG_REGEX.test(tag)) {
-            form.hashtags.setCustomValidity(`Хэштэг "` + tag + `" не соответствует правилам оформления`);
+            form.hashtags.setCustomValidity(`Хэштэг "${tag}" не соответствует правилам оформления`);
           }
         }
       }
