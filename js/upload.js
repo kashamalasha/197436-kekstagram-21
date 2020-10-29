@@ -62,7 +62,42 @@
 
   let onUploadFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(formUpload), closeUpload, onUploadError);
+    window.backend.save(new FormData(formUpload), onUploadSuccess, onUploadError);
+  };
+
+  let onUploadSuccess = function () {
+    let successTemplate = document.querySelector(`#success`)
+      .content
+      .querySelector(`.success`);
+
+    let successParent = document.querySelector(`main`);
+    let successPopup = successTemplate.cloneNode(true);
+
+    let popup = {
+      button: successPopup.querySelector(`.success__button`)
+    };
+
+    closeUpload();
+    successParent.appendChild(successPopup);
+
+    let onSuccessEscPress = function (evt) {
+      window.util.onEscPress(evt, closeSuccess);
+    };
+
+    let closeSuccess = function () {
+      successParent.removeChild(successPopup);
+      document.removeEventListener(`click`, closeSuccess);
+      document.removeEventListener(`keydown`, onSuccessEscPress);
+    };
+
+    popup.button.focus();
+
+    popup.button.addEventListener(`keydown`, function (evt) {
+      window.util.onEnterPress(evt, closeSuccess);
+    });
+
+    document.addEventListener(`keydown`, onSuccessEscPress);
+    document.addEventListener(`click`, closeSuccess);
   };
 
   let onUploadError = function (errorMessage) {
@@ -72,10 +107,13 @@
 
     let errorParent = document.querySelector(`main`);
     let errorPopup = errorTemplate.cloneNode(true);
-    let errorTitle = errorPopup.querySelector(`.error__title`);
-    let errorClose = errorPopup.querySelector(`.error__button`);
 
-    errorTitle.textContent = errorMessage;
+    let popup = {
+      title: errorPopup.querySelector(`.error__title`),
+      button: errorPopup.querySelector(`.error__button`)
+    };
+
+    popup.title.textContent = errorMessage;
 
     closeUpload();
     errorParent.appendChild(errorPopup);
@@ -100,7 +138,7 @@
       document.removeEventListener(`keydown`, onErrorEscPress);
     };
 
-    errorClose.addEventListener(`keydown`, function (evt) {
+    popup.button.addEventListener(`keydown`, function (evt) {
       window.util.onEnterPress(evt, closeError);
     });
 
