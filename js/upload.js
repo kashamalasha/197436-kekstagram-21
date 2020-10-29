@@ -27,7 +27,11 @@
     uploadImgOverlay.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
     window.effects.form.effectSlider.classList.add(`hidden`);
-    form.scaleValue.value = `100%`;
+
+    window.effects.setScaleFactor();
+    window.effects.resetEffect();
+    form.hashtags.value = ``;
+    form.description.value = ``;
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
@@ -44,11 +48,10 @@
   let closeUpload = function () {
     uploadImgOverlay.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
-    uploadStart.value = ``;
-    form.hashtags.textContent = ``;
-    form.description.textContent = ``;
 
-    form.effects.removeEventListener(`change`, window.effects.onEffectChange);
+    uploadStart.value = ``;
+
+    form.effects.removeEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.removeEventListener(`input`, window.validate.clearValidity);
     document.removeEventListener(`keydown`, onUploadEscPress);

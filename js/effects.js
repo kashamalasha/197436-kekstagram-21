@@ -17,13 +17,17 @@
     const REGEX = /(\d+)/;
     let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
 
-    switch (true) {
-      case evt.target.classList.contains(`scale__control--bigger`):
-        value += 25;
-        break;
-      case evt.target.classList.contains(`scale__control--smaller`):
-        value -= 25;
-        break;
+    if (evt) {
+      switch (true) {
+        case evt.target.classList.contains(`scale__control--bigger`):
+          value += 25;
+          break;
+        case evt.target.classList.contains(`scale__control--smaller`):
+          value -= 25;
+          break;
+      }
+    } else {
+      value = 100;
     }
 
     if (value > 100) {
@@ -46,8 +50,8 @@
 
   let setMaxPinPosition = function () {
     let maxPinPosition = form.effectLevelLine.clientWidth;
-    window.effects.form.effectLevelPin.style.left = `${maxPinPosition} px`;
-    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition} px`;
+    window.effects.form.effectLevelPin.style.left = `${maxPinPosition}px`;
+    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition}px`;
   };
 
   let setEffectIntencity = function () {
@@ -127,7 +131,8 @@
     form,
     onEffectsChange,
     setEffectIntencity,
-    setScaleFactor
+    setScaleFactor,
+    resetEffect
   };
 
 })();
