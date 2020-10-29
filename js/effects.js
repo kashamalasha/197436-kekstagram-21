@@ -46,8 +46,8 @@
 
   let setMaxPinPosition = function () {
     let maxPinPosition = form.effectLevelLine.clientWidth;
-    window.effects.form.effectLevelPin.style.left = `${maxPinPosition} px`;
-    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition} px`;
+    window.effects.form.effectLevelPin.style.left = `${maxPinPosition}px`;
+    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition}px`;
   };
 
   let setEffectIntencity = function () {
