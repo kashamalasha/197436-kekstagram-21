@@ -46,6 +46,7 @@
   let clearValidity = function () {
     form.hashtags.setCustomValidity(``);
     form.hashtags.reportValidity();
+    form.hashtags.classList.remove(`text--errors`);
   };
 
   window.validate = {

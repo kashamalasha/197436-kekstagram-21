@@ -715,6 +715,10 @@ main {
   border: none;
 }
 
+.text--errors {
+  box-shadow: 0 0 3pt 2pt red;
+}
+
 .text__hashtags {
   width: 450px;
 

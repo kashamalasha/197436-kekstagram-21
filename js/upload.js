@@ -11,7 +11,6 @@
     hashtags: formUpload.querySelector(`.text__hashtags`),
     description: formUpload.querySelector(`.text__description`),
     effects: formUpload.querySelector(`.img-upload__effects`),
-    scaleValue: formUpload.querySelector(`.img-upload__scale input`),
     scaleButtons: formUpload.querySelectorAll(`.img-upload__scale button`),
     submitButton: formUpload.querySelector(`.img-upload__submit`)
   };
@@ -34,7 +33,6 @@
     form.description.value = ``;
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
-    form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.addEventListener(`input`, window.validate.clearValidity);
     document.addEventListener(`keydown`, onUploadEscPress);
 
@@ -52,7 +50,6 @@
     uploadStart.value = ``;
 
     form.effects.removeEventListener(`change`, window.effects.onEffectsChange);
-    form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.removeEventListener(`input`, window.validate.clearValidity);
     document.removeEventListener(`keydown`, onUploadEscPress);
 
@@ -65,7 +62,14 @@
 
   let onUploadFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(formUpload), onUploadSuccess, onUploadError);
+
+    window.validate.checkHashtags();
+
+    if (!form.hashtags.validity.valid) {
+      form.hashtags.classList.add(`text--errors`);
+    } else {
+      window.backend.save(new FormData(formUpload), onUploadSuccess, onUploadError);
+    }
   };
 
   let onUploadSuccess = function () {
@@ -83,24 +87,24 @@
     closeUpload();
     successParent.appendChild(successPopup);
 
-    let onSuccessEscPress = function (evt) {
-      window.util.onEscPress(evt, closeSuccess);
+    let onPopupEscPress = function (evt) {
+      window.util.onEscPress(evt, closePopup);
     };
 
-    let closeSuccess = function () {
+    let closePopup = function () {
       successParent.removeChild(successPopup);
-      document.removeEventListener(`click`, closeSuccess);
-      document.removeEventListener(`keydown`, onSuccessEscPress);
+      document.removeEventListener(`click`, closePopup);
+      document.removeEventListener(`keydown`, onPopupEscPress);
     };
 
     popup.button.focus();
 
     popup.button.addEventListener(`keydown`, function (evt) {
-      window.util.onEnterPress(evt, closeSuccess);
+      window.util.onEnterPress(evt, closePopup);
     });
 
-    document.addEventListener(`keydown`, onSuccessEscPress);
-    document.addEventListener(`click`, closeSuccess);
+    document.addEventListener(`keydown`, onPopupEscPress);
+    document.addEventListener(`click`, closePopup);
   };
 
   let onUploadError = function (errorMessage) {
@@ -121,11 +125,11 @@
     closeUpload();
     errorParent.appendChild(errorPopup);
 
-    let onErrorEscPress = function (evt) {
-      window.util.onEscPress(evt, closeError);
+    let onPopupEscPress = function (evt) {
+      window.util.onEscPress(evt, closePopup);
     };
 
-    let closeError = function (evt) {
+    let closePopup = function (evt) {
 
       if (evt) {
         evt.preventDefault();
@@ -137,16 +141,16 @@
         errorParent.removeChild(errorPopup);
       }
 
-      document.removeEventListener(`click`, closeError);
-      document.removeEventListener(`keydown`, onErrorEscPress);
+      document.removeEventListener(`click`, closePopup);
+      document.removeEventListener(`keydown`, onPopupEscPress);
     };
 
     popup.button.addEventListener(`keydown`, function (evt) {
-      window.util.onEnterPress(evt, closeError);
+      window.util.onEnterPress(evt, closePopup);
     });
 
-    document.addEventListener(`keydown`, onErrorEscPress);
-    document.addEventListener(`click`, closeError);
+    document.addEventListener(`keydown`, onPopupEscPress);
+    document.addEventListener(`click`, closePopup);
   };
 
   uploadStart.addEventListener(`change`, function () {
