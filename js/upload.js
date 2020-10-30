@@ -29,8 +29,7 @@
 
     window.effects.setScaleFactor();
     window.effects.resetEffect();
-    form.hashtags.value = ``;
-    form.description.value = ``;
+    window.validate.clearValidity();
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.addEventListener(`input`, window.validate.clearValidity);
@@ -73,84 +72,13 @@
   };
 
   let onUploadSuccess = function () {
-    let successTemplate = document.querySelector(`#success`)
-      .content
-      .querySelector(`.success`);
-
-    let successParent = document.querySelector(`main`);
-    let successPopup = successTemplate.cloneNode(true);
-
-    let popup = {
-      button: successPopup.querySelector(`.success__button`)
-    };
-
-    closeUpload();
-    successParent.appendChild(successPopup);
-
-    let onPopupEscPress = function (evt) {
-      window.util.onEscPress(evt, closePopup);
-    };
-
-    let closePopup = function () {
-      successParent.removeChild(successPopup);
-      document.removeEventListener(`click`, closePopup);
-      document.removeEventListener(`keydown`, onPopupEscPress);
-    };
-
-    popup.button.focus();
-
-    popup.button.addEventListener(`keydown`, function (evt) {
-      window.util.onEnterPress(evt, closePopup);
-    });
-
-    document.addEventListener(`keydown`, onPopupEscPress);
-    document.addEventListener(`click`, closePopup);
+    uploadCancel.click();
+    window.popup.renderPopup(`success`);
   };
 
   let onUploadError = function (errorMessage) {
-    let errorTemplate = document.querySelector(`#error`)
-      .content
-      .querySelector(`.error`);
-
-    let errorParent = document.querySelector(`main`);
-    let errorPopup = errorTemplate.cloneNode(true);
-
-    let popup = {
-      title: errorPopup.querySelector(`.error__title`),
-      button: errorPopup.querySelector(`.error__button`)
-    };
-
-    popup.title.textContent = errorMessage;
-
-    closeUpload();
-    errorParent.appendChild(errorPopup);
-
-    let onPopupEscPress = function (evt) {
-      window.util.onEscPress(evt, closePopup);
-    };
-
-    let closePopup = function (evt) {
-
-      if (evt) {
-        evt.preventDefault();
-        if (evt.target.className === `error` ||
-            evt.target.className === `error__button`) {
-          errorParent.removeChild(errorPopup);
-        }
-      } else {
-        errorParent.removeChild(errorPopup);
-      }
-
-      document.removeEventListener(`click`, closePopup);
-      document.removeEventListener(`keydown`, onPopupEscPress);
-    };
-
-    popup.button.addEventListener(`keydown`, function (evt) {
-      window.util.onEnterPress(evt, closePopup);
-    });
-
-    document.addEventListener(`keydown`, onPopupEscPress);
-    document.addEventListener(`click`, closePopup);
+    uploadCancel.click();
+    window.popup.renderPopup(`error`, errorMessage);
   };
 
   uploadStart.addEventListener(`change`, function () {
