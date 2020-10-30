@@ -28,11 +28,13 @@
 
     let closePopup = function (evt) {
 
-      if (evt) {
+      if (evt && type === `error`) {
         evt.preventDefault();
         if (evt.target.className === `${type}` ||
             evt.target.className === `${type}__button`) {
           popupParent.removeChild(popupElement);
+        } else {
+          return;
         }
       } else {
         popupParent.removeChild(popupElement);
