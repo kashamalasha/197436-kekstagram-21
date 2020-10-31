@@ -1,18 +1,18 @@
 'use strict';
 
 (function () {
-  let uploadDialog = document.querySelector(`#upload-file`);
-
+  let uploadStart = document.querySelector(`#upload-file`);
   let uploadImgOverlay = document.querySelector(`.img-upload__overlay`);
   let uploadCancel = document.querySelector(`#upload-cancel`);
   let imgUpload = document.querySelector(`.img-upload`);
+  let formUpload = imgUpload.querySelector(`.img-upload__form`);
 
   let form = {
-    hashtags: imgUpload.querySelector(`.text__hashtags`),
-    description: imgUpload.querySelector(`.text__description`),
-    effects: imgUpload.querySelector(`.img-upload__effects`),
-    scaleValue: imgUpload.querySelector(`.img-upload__scale input`),
-    scaleButtons: imgUpload.querySelectorAll(`.img-upload__scale button`)
+    hashtags: formUpload.querySelector(`.text__hashtags`),
+    description: formUpload.querySelector(`.text__description`),
+    effects: formUpload.querySelector(`.img-upload__effects`),
+    scaleButtons: formUpload.querySelectorAll(`.img-upload__scale button`),
+    submitButton: formUpload.querySelector(`.img-upload__submit`)
   };
 
   let onUploadEscPress = function (evt) {
@@ -26,34 +26,63 @@
     uploadImgOverlay.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
     window.effects.form.effectSlider.classList.add(`hidden`);
-    form.scaleValue.value = `100%`;
+
+    window.effects.setScaleFactor();
+    window.effects.resetEffect();
+    window.validate.clearValidity();
+    window.effects.form.effectLevelValue.value = ``;
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
-    form.hashtags.addEventListener(`blur`, window.validate.checkHashtags);
     form.hashtags.addEventListener(`input`, window.validate.clearValidity);
     document.addEventListener(`keydown`, onUploadEscPress);
 
     for (let button of form.scaleButtons) {
       button.addEventListener(`click`, window.effects.setScaleFactor);
     }
+
+    formUpload.addEventListener(`submit`, onUploadFormSubmit);
   };
 
   let closeUpload = function () {
     uploadImgOverlay.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
-    uploadDialog.value = ``;
 
-    form.effects.removeEventListener(`change`, window.effects.onEffectChange);
-    form.hashtags.removeEventListener(`blur`, window.validate.checkHashtags);
+    uploadStart.value = ``;
+
+    form.effects.removeEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.removeEventListener(`input`, window.validate.clearValidity);
     document.removeEventListener(`keydown`, onUploadEscPress);
 
     for (let button of form.scaleButtons) {
       button.removeEventListener(`click`, window.effects.setScaleFactor);
     }
+
+    formUpload.removeEventListener(`submit`, onUploadFormSubmit);
   };
 
-  uploadDialog.addEventListener(`change`, function () {
+  let onUploadFormSubmit = function (evt) {
+    evt.preventDefault();
+
+    window.validate.checkHashtags();
+
+    if (!form.hashtags.validity.valid) {
+      form.hashtags.classList.add(`text--errors`);
+    } else {
+      window.backend.save(new FormData(formUpload), onUploadSuccess, onUploadError);
+    }
+  };
+
+  let onUploadSuccess = function () {
+    uploadCancel.click();
+    window.popup.renderPopup(`success`);
+  };
+
+  let onUploadError = function (errorMessage) {
+    uploadCancel.click();
+    window.popup.renderPopup(`error`, errorMessage);
+  };
+
+  uploadStart.addEventListener(`change`, function () {
     openUpload();
   });
 
@@ -62,6 +91,10 @@
   });
 
   uploadCancel.addEventListener(`keydown`, function (evt) {
+    window.util.onEnterPress(evt, closeUpload);
+  });
+
+  form.submitButton.addEventListener(`keydown`, function (evt) {
     window.util.onEnterPress(evt, closeUpload);
   });
 

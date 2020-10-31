@@ -10,6 +10,7 @@
     effectLevelPin: imgUpload.querySelector(`.effect-level__pin`),
     effectLevelLine: imgUpload.querySelector(`.effect-level__line`),
     effectLevelDepth: imgUpload.querySelector(`.effect-level__depth`),
+    effectLevelValue: imgUpload.querySelector(`.effect-level__value`),
     scaleValue: imgUpload.querySelector(`.scale__control--value`)
   };
 
@@ -17,13 +18,17 @@
     const REGEX = /(\d+)/;
     let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
 
-    switch (true) {
-      case evt.target.classList.contains(`scale__control--bigger`):
-        value += 25;
-        break;
-      case evt.target.classList.contains(`scale__control--smaller`):
-        value -= 25;
-        break;
+    if (evt) {
+      switch (true) {
+        case evt.target.classList.contains(`scale__control--bigger`):
+          value += 25;
+          break;
+        case evt.target.classList.contains(`scale__control--smaller`):
+          value -= 25;
+          break;
+      }
+    } else {
+      value = 100;
     }
 
     if (value > 100) {
@@ -46,8 +51,9 @@
 
   let setMaxPinPosition = function () {
     let maxPinPosition = form.effectLevelLine.clientWidth;
-    window.effects.form.effectLevelPin.style.left = `${maxPinPosition} px`;
-    window.effects.form.effectLevelDepth.style.width = `${maxPinPosition} px`;
+    form.effectLevelPin.style.left = `${maxPinPosition}px`;
+    form.effectLevelDepth.style.width = `${maxPinPosition}px`;
+    form.effectLevelValue.value = `100`;
   };
 
   let setEffectIntencity = function () {
@@ -76,6 +82,8 @@
       default:
         form.imgUploadPreview.style.filter = ``;
     }
+
+    form.effectLevelValue.value = percentValue;
   };
 
   let resetEffect = function () {
@@ -113,6 +121,7 @@
       default:
         resetEffect();
         form.effectSlider.classList.add(`hidden`);
+        form.effectLevelValue.value = ``;
     }
     form.effectLevelPin.addEventListener(`mouseup`, setEffectIntencity);
   };
@@ -127,7 +136,8 @@
     form,
     onEffectsChange,
     setEffectIntencity,
-    setScaleFactor
+    setScaleFactor,
+    resetEffect
   };
 
 })();

@@ -9,7 +9,7 @@
   };
 
   const Url = {
-    SAVE: ``,
+    SAVE: `https://21.javascript.pages.academy/kekstagram`,
     LOAD: `https://21.javascript.pages.academy/kekstagram/data`
   };
 
@@ -24,7 +24,6 @@
           break;
         default:
           onError(`Статус ответа: ${xhr.status} - ${xhr.statusText}`);
-          break;
       }
     });
 
