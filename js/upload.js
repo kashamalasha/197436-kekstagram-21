@@ -30,6 +30,7 @@
     window.effects.setScaleFactor();
     window.effects.resetEffect();
     window.validate.clearValidity();
+    window.effects.form.effectLevelValue.value = ``;
 
     form.effects.addEventListener(`change`, window.effects.onEffectsChange);
     form.hashtags.addEventListener(`input`, window.validate.clearValidity);
