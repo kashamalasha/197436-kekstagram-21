@@ -21,6 +21,13 @@
     return arr[getRandomInt(0, arr.length - 1)];
   };
 
+  const getShuffledArray = function (arr) {
+    let randomComparator = function () {
+      return 0.5 - Math.random();
+    };
+    return arr.slice().sort(randomComparator);
+  };
+
   let onEscPress = function (evt, action) {
     if (evt.key === Keys.ESCAPE.keyName) {
       evt.preventDefault();
@@ -37,6 +44,7 @@
   window.util = {
     getRandomInt,
     getRandomFromArray,
+    getShuffledArray,
     onEscPress,
     onEnterPress
   };
