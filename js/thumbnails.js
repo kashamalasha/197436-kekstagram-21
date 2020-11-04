@@ -24,12 +24,19 @@
   let renderPhotos = function (arr) {
     photosArray = arr;
     let fragment = document.createDocumentFragment();
+    let previousThumbnails = thumbnails.querySelectorAll(`.picture`);
+
+    if (previousThumbnails) {
+      for (let thumbnail of previousThumbnails) {
+        thumbnail.parentNode.removeChild(thumbnail);
+      }
+    }
 
     for (let i = 0; i < arr.length; i++) {
       fragment.appendChild(renderPhoto(arr[i]));
     }
 
-    return fragment;
+    thumbnails.appendChild(fragment);
   };
 
   let onPictureEnterPress = function (evt) {
