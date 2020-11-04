@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  const DEBOUNCE_INTERVAL = 2000;
 
   const Keys = {
     ENTER: {
@@ -41,12 +42,26 @@
     }
   };
 
+  const debounce = function (callback, ...args) {
+    let lastTimeout = null;
+
+    return function () {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        callback(...args);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.util = {
     getRandomInt,
     getRandomFromArray,
     getShuffledArray,
     onEscPress,
-    onEnterPress
+    onEnterPress,
+    debounce
   };
 
 })();
