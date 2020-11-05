@@ -3,7 +3,6 @@
 (function () {
   let pictureElement = document.querySelector(`.big-picture`);
 
-
   let renderComments = function (arr) {
     let comments = pictureElement.querySelector(`.social__comments`);
     let comment = comments.querySelector(`.social__comment`);
@@ -54,12 +53,15 @@
   };
 
   let showPreview = function (thumbnail, data) {
-    const REGEX = /(\d+)/;
+    let container = document.querySelector(`.pictures`);
+    let collection = container.querySelectorAll(`.picture`);
 
-    let photoSrc = thumbnail.getAttribute(`src`);
-    let photoNum = photoSrc.match(REGEX)[0];
-
-    renderPicture(data[photoNum - 1]);
+    for (let i = 0; i <= collection.length; i++) {
+      if (collection[i] === thumbnail) {
+        renderPicture(data[i]);
+        break;
+      }
+    }
   };
 
   let closePicture = function () {
