@@ -2,12 +2,10 @@
 
 (function () {
 
-  const PHOTO_QUANTITY = 25;
-
   let onSuccess = function (arr) {
-    let photosArray = arr.slice(0, PHOTO_QUANTITY);
-    window.thumbnails.renderPhotos(photosArray);
-    window.filter.showFilters(photosArray);
+    window.thumbnails.initialPhotos = arr;
+    window.thumbnails.renderPhotos(arr);
+    window.filter.showFilters();
   };
 
   let onError = function (errorMessage) {

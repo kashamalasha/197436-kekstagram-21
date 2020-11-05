@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  let photosArray;
+  let initialPhotos;
+  let filteredPhotos;
 
   let thumbnails = document.querySelector(`.pictures`);
   let photoTemplate = document.querySelector(`#picture`)
@@ -22,7 +23,6 @@
   };
 
   let renderPhotos = function (arr) {
-    photosArray = arr;
     let fragment = document.createDocumentFragment();
     let previousThumbnails = thumbnails.querySelectorAll(`.picture`);
 
@@ -42,13 +42,15 @@
   let onPictureEnterPress = function (evt) {
     evt.preventDefault();
     if (evt.target.className === `picture`) {
-      window.picture.showPreview(evt.target.querySelector(`img`), photosArray);
+      window.picture.showPreview(evt.target,
+          window.thumbnails.filteredPhotos ? window.thumbnails.filteredPhotos : window.thumbnails.initialPhotos);
     }
   };
 
   thumbnails.addEventListener(`click`, function (evt) {
     if (evt.target.className === `picture__img`) {
-      window.picture.showPreview(evt.target, photosArray);
+      window.picture.showPreview(evt.target.parentNode,
+          window.thumbnails.filteredPhotos ? window.thumbnails.filteredPhotos : window.thumbnails.initialPhotos);
     }
   });
 
@@ -57,6 +59,8 @@
   });
 
   window.thumbnails = {
+    initialPhotos,
+    filteredPhotos,
     renderPhotos
   };
 })();

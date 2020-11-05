@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const DEBOUNCE_INTERVAL = 2000;
+  const DEBOUNCE_INTERVAL = 500;
 
   const Keys = {
     ENTER: {
@@ -42,10 +42,10 @@
     }
   };
 
-  const debounce = function (callback, ...args) {
+  const debounce = function (callback) {
     let lastTimeout = null;
 
-    return function () {
+    return function (...args) {
       if (lastTimeout) {
         window.clearTimeout(lastTimeout);
       }
