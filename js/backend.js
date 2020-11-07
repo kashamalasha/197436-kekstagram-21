@@ -13,7 +13,7 @@
     LOAD: `https://21.javascript.pages.academy/kekstagram/data`
   };
 
-  let createRequest = function (method, url, onLoad, onError) {
+  const createRequest = function (method, url, onLoad, onError) {
     let xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
@@ -41,12 +41,12 @@
     return xhr;
   };
 
-  let load = function (onSuccess, onError) {
+  const load = function (onSuccess, onError) {
     let xhr = createRequest(`GET`, Url.LOAD, onSuccess, onError);
     xhr.send();
   };
 
-  let save = function (data, onSuccess, onError) {
+  const save = function (data, onSuccess, onError) {
     let xhr = createRequest(`POST`, Url.SAVE, onSuccess, onError);
     xhr.send(data);
   };

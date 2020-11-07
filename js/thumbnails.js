@@ -9,7 +9,7 @@
     .content
     .querySelector(`.picture`);
 
-  let renderPhoto = function (obj) {
+  const renderPhoto = function (obj) {
     let photo = photoTemplate.cloneNode(true);
     let image = photo.querySelector(`.picture__img`);
     let comments = photo.querySelector(`.picture__comments`);
@@ -22,7 +22,7 @@
     return photo;
   };
 
-  let renderPhotos = function (arr) {
+  const renderPhotos = function (arr) {
     let fragment = document.createDocumentFragment();
     let previousThumbnails = thumbnails.querySelectorAll(`.picture`);
 
@@ -39,7 +39,7 @@
     thumbnails.appendChild(fragment);
   };
 
-  let onPictureEnterPress = function (evt) {
+  const onPictureEnterPress = function (evt) {
     evt.preventDefault();
     if (evt.target.className === `picture`) {
       window.picture.showPreview(evt.target,

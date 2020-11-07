@@ -2,13 +2,13 @@
 
 (function () {
 
-  let onSuccess = function (arr) {
+  const onSuccess = function (arr) {
     window.thumbnails.initialPhotos = arr;
     window.thumbnails.renderPhotos(arr);
     window.filter.showFilters();
   };
 
-  let onError = function (errorMessage) {
+  const onError = function (errorMessage) {
     window.popup.renderPopup(`error`, errorMessage, `Закрыть`);
   };
 

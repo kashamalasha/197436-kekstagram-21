@@ -12,7 +12,7 @@
     let lineWidth = window.effects.form.effectLevelLine.clientWidth;
     let isDragged = false;
 
-    let onMouseMove = function (moveEvt) {
+    const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
       isDragged = true;
@@ -39,14 +39,14 @@
       }
     };
 
-    let onMouseUp = function (upEvt) {
+    const onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
 
       if (isDragged) {
-        let onClickPreventDefault = function (clickEvt) {
+        const onClickPreventDefault = function (clickEvt) {
           clickEvt.preventDefault();
           window.effects.form.effectLevelPin.removeEventListener(`click`, onClickPreventDefault);
         };

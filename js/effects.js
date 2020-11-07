@@ -14,7 +14,7 @@
     scaleValue: imgUpload.querySelector(`.scale__control--value`)
   };
 
-  let setScaleFactor = function (evt) {
+  const setScaleFactor = function (evt) {
     const REGEX = /(\d+)/;
     let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
 
@@ -41,7 +41,7 @@
     form.imgUploadPreview.style.transform = `scale(${value / 100})`;
   };
 
-  let getCurrentPinPosition = function () {
+  const getCurrentPinPosition = function () {
     let position = {
       width: form.effectLevelLine.clientWidth,
       depth: form.effectLevelDepth.clientWidth
@@ -49,14 +49,14 @@
     return position.depth / position.width;
   };
 
-  let setMaxPinPosition = function () {
+  const setMaxPinPosition = function () {
     let maxPinPosition = form.effectLevelLine.clientWidth;
     form.effectLevelPin.style.left = `${maxPinPosition}px`;
     form.effectLevelDepth.style.width = `${maxPinPosition}px`;
     form.effectLevelValue.value = `100`;
   };
 
-  let setEffectIntencity = function () {
+  const setEffectIntencity = function () {
     let pinPosition = getCurrentPinPosition();
     let percentValue = (pinPosition.toFixed(2) * 100);
     let intervalZeroOne = pinPosition.toFixed(1);
@@ -86,12 +86,12 @@
     form.effectLevelValue.value = percentValue;
   };
 
-  let resetEffect = function () {
+  const resetEffect = function () {
     form.imgUploadPreview.className = ``;
     form.imgUploadPreview.style.filter = ``;
   };
 
-  let setEffectStyle = function (target) {
+  const setEffectStyle = function (target) {
     switch (true) {
       case target.matches(`#effect-chrome`):
         resetEffect();
@@ -126,7 +126,7 @@
     form.effectLevelPin.addEventListener(`mouseup`, setEffectIntencity);
   };
 
-  let onEffectsChange = function (evt) {
+  const onEffectsChange = function (evt) {
     setEffectStyle(evt.target);
     setMaxPinPosition();
     setEffectIntencity();

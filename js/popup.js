@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  let renderPopup = function (type, message, buttonTitle) {
+  const renderPopup = function (type, message, buttonTitle) {
     let popupTemplate = document.querySelector(`#${type}`)
       .content
       .querySelector(`.${type}`);
@@ -22,11 +22,11 @@
       popup.button.textContent = buttonTitle;
     }
 
-    let onPopupEscPress = function (evt) {
+    const onPopupEscPress = function (evt) {
       window.util.onEscPress(evt, closePopup);
     };
 
-    let closePopup = function (evt) {
+    const closePopup = function (evt) {
 
       if (evt && type === `error`) {
         evt.preventDefault();

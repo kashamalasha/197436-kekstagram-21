@@ -8,7 +8,7 @@
   let commentsLoader = pictureElement.querySelector(`.social__comments-loader`);
   let visibleCommentsCounter = pictureElement.querySelector(`.social__comment-count`);
 
-  let showMoreComments = function () {
+  const showMoreComments = function () {
     const CUTOFF_DEFAULT = 5;
 
     let hiddenComments = comments.querySelectorAll(`.hidden`);
@@ -29,7 +29,7 @@
     }
   };
 
-  let renderComments = function (arr) {
+  const renderComments = function (arr) {
     let comment = comments.querySelector(`.social__comment`);
     let fragment = document.createDocumentFragment();
 
@@ -64,7 +64,7 @@
     comments.appendChild(fragment);
   };
 
-  let renderPicture = function (data) {
+  const renderPicture = function (data) {
 
     let image = pictureElement.querySelector(`.big-picture__img img`);
     let likesCount = pictureElement.querySelector(`.likes-count`);
@@ -85,7 +85,7 @@
     closeModal.addEventListener(`click`, closePicture);
   };
 
-  let showPreview = function (thumbnail, data) {
+  const showPreview = function (thumbnail, data) {
     let container = document.querySelector(`.pictures`);
     let collection = container.querySelectorAll(`.picture`);
 
@@ -97,16 +97,16 @@
     }
   };
 
-  let closePicture = function () {
+  const closePicture = function () {
     pictureElement.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
   };
 
-  let onPictureEscPress = function (evt) {
+  const onPictureEscPress = function (evt) {
     window.util.onEscPress(evt, closePicture);
   };
 
-  let onShowMoreCommentsEnterPress = function (evt) {
+  const onShowMoreCommentsEnterPress = function (evt) {
     window.util.onEnterPress(evt, showMoreComments);
   };
 

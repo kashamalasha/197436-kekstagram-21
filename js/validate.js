@@ -15,11 +15,11 @@
     hashtags: imgUpload.querySelector(`.text__hashtags`)
   };
 
-  let hasDuplicates = function (arr) {
+  const hasDuplicates = function (arr) {
     return new Set(arr).size !== arr.length;
   };
 
-  let checkHashtags = function () {
+  const checkHashtags = function () {
     if (form.hashtags.value) {
       let tags = form.hashtags.value.trim().toLowerCase().split(` `);
       if (tags.length > HashtagParams.MAX_TAGS) {
@@ -43,7 +43,7 @@
     form.hashtags.reportValidity();
   };
 
-  let clearValidity = function () {
+  const clearValidity = function () {
     form.hashtags.setCustomValidity(``);
     form.hashtags.reportValidity();
     form.hashtags.classList.remove(`text--errors`);
