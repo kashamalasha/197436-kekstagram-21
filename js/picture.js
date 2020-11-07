@@ -1,16 +1,37 @@
 'use strict';
 
 (function () {
+  const VISIBLE_COUNTER_REGEX = /^\d+/;
+
   let pictureElement = document.querySelector(`.big-picture`);
+  let comments = pictureElement.querySelector(`.social__comments`);
+  let commentsLoader = pictureElement.querySelector(`.social__comments-loader`);
+  let visibleCommentsCounter = pictureElement.querySelector(`.social__comment-count`);
+
+  let showMoreComments = function () {
+    const CUTOFF_DEFAULT = 5;
+
+    let hiddenComments = comments.querySelectorAll(`.hidden`);
+    let currentVisibleCounter = parseInt(visibleCommentsCounter.innerHTML.match(VISIBLE_COUNTER_REGEX)[0], 10);
+
+    if (hiddenComments.length) {
+      let cutoff = hiddenComments.length < CUTOFF_DEFAULT ? hiddenComments.length : CUTOFF_DEFAULT;
+
+      for (let i = 0; i < cutoff; i++) {
+        hiddenComments[i].classList.remove(`hidden`);
+      }
+
+      if (cutoff < CUTOFF_DEFAULT) {
+        commentsLoader.classList.add(`hidden`);
+      }
+
+      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COUNTER_REGEX, currentVisibleCounter + cutoff);
+    }
+  };
 
   let renderComments = function (arr) {
-    let comments = pictureElement.querySelector(`.social__comments`);
     let comment = comments.querySelector(`.social__comment`);
     let fragment = document.createDocumentFragment();
-
-    if (arr.length > 5) {
-      arr = arr.slice(0, 5);
-    }
 
     for (let i = 0; i < arr.length; i++) {
       let record = comment.cloneNode(true);
@@ -21,8 +42,23 @@
       avatar.alt = arr[i].name;
       message.textContent = arr[i].message;
 
+      if (i >= 5) {
+        record.classList.add(`hidden`);
+      }
+
       fragment.appendChild(record);
     }
+
+    if (arr.length < 5) {
+      let commentsCount = pictureElement.querySelector(`.comments-count`).textContent;
+      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COUNTER_REGEX, commentsCount);
+      commentsLoader.classList.add(`hidden`);
+    } else {
+      commentsLoader.classList.remove(`hidden`);
+    }
+
+    commentsLoader.addEventListener(`click`, showMoreComments);
+    commentsLoader.addEventListener(`keydown`, onShowMoreCommentsEnterPress);
 
     comments.innerHTML = ``;
     comments.appendChild(fragment);
@@ -43,9 +79,6 @@
     renderComments(data.comments);
 
     document.body.classList.add(`modal-open`);
-
-    pictureElement.querySelector(`.social__comment-count`).classList.add(`hidden`);
-    pictureElement.querySelector(`.comments-loader`).classList.add(`hidden`);
     pictureElement.classList.remove(`hidden`);
 
     document.addEventListener(`keydown`, onPictureEscPress);
@@ -66,11 +99,15 @@
 
   let closePicture = function () {
     pictureElement.classList.add(`hidden`);
-    pictureElement.classList.remove(`modal-open`);
+    document.body.classList.remove(`modal-open`);
   };
 
   let onPictureEscPress = function (evt) {
     window.util.onEscPress(evt, closePicture);
+  };
+
+  let onShowMoreCommentsEnterPress = function (evt) {
+    window.util.onEnterPress(evt, showMoreComments);
   };
 
   window.picture = {
