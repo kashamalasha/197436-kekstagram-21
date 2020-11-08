@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  const VISIBLE_COUNTER_REGEX = /^\d+/;
+  const VISIBLE_COMMENTS_COUNTER_REGEX = /^\d+/;
+  const DEFAULT_COMMENTS_QUANTITY = 5;
 
   let pictureElement = document.querySelector(`.big-picture`);
   let comments = pictureElement.querySelector(`.social__comments`);
@@ -9,23 +10,22 @@
   let visibleCommentsCounter = pictureElement.querySelector(`.social__comment-count`);
 
   const showMoreComments = function () {
-    const CUTOFF_DEFAULT = 5;
 
     let hiddenComments = comments.querySelectorAll(`.hidden`);
-    let currentVisibleCounter = parseInt(visibleCommentsCounter.innerHTML.match(VISIBLE_COUNTER_REGEX)[0], 10);
+    let currentVisibleCounter = parseInt(visibleCommentsCounter.innerHTML.match(VISIBLE_COMMENTS_COUNTER_REGEX)[0], 10);
 
     if (hiddenComments.length) {
-      let cutoff = hiddenComments.length < CUTOFF_DEFAULT ? hiddenComments.length : CUTOFF_DEFAULT;
+      let cutoff = hiddenComments.length < DEFAULT_COMMENTS_QUANTITY ? hiddenComments.length : DEFAULT_COMMENTS_QUANTITY;
 
       for (let i = 0; i < cutoff; i++) {
         hiddenComments[i].classList.remove(`hidden`);
       }
 
-      if (cutoff < CUTOFF_DEFAULT) {
+      if (cutoff < DEFAULT_COMMENTS_QUANTITY) {
         commentsLoader.classList.add(`hidden`);
       }
 
-      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COUNTER_REGEX, currentVisibleCounter + cutoff);
+      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COMMENTS_COUNTER_REGEX, currentVisibleCounter + cutoff);
     }
   };
 
@@ -42,18 +42,19 @@
       avatar.alt = arr[i].name;
       message.textContent = arr[i].message;
 
-      if (i >= 5) {
+      if (i >= DEFAULT_COMMENTS_QUANTITY) {
         record.classList.add(`hidden`);
       }
 
       fragment.appendChild(record);
     }
 
-    if (arr.length < 5) {
+    if (arr.length < DEFAULT_COMMENTS_QUANTITY) {
       let commentsCount = pictureElement.querySelector(`.comments-count`).textContent;
-      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COUNTER_REGEX, commentsCount);
+      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COMMENTS_COUNTER_REGEX, commentsCount);
       commentsLoader.classList.add(`hidden`);
     } else {
+      visibleCommentsCounter.innerHTML = visibleCommentsCounter.innerHTML.replace(VISIBLE_COMMENTS_COUNTER_REGEX, DEFAULT_COMMENTS_QUANTITY);
       commentsLoader.classList.remove(`hidden`);
     }
 
