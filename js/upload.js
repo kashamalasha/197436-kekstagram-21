@@ -15,14 +15,14 @@
     submitButton: formUpload.querySelector(`.img-upload__submit`)
   };
 
-  let onUploadEscPress = function (evt) {
+  const onUploadEscPress = function (evt) {
     if (document.activeElement !== form.hashtags
         && document.activeElement !== form.description) {
       window.util.onEscPress(evt, closeUpload);
     }
   };
 
-  let openUpload = function () {
+  const openUpload = function () {
     uploadImgOverlay.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
     window.effects.form.effectSlider.classList.add(`hidden`);
@@ -43,7 +43,7 @@
     formUpload.addEventListener(`submit`, onUploadFormSubmit);
   };
 
-  let closeUpload = function () {
+  const closeUpload = function () {
     uploadImgOverlay.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
 
@@ -60,7 +60,7 @@
     formUpload.removeEventListener(`submit`, onUploadFormSubmit);
   };
 
-  let onUploadFormSubmit = function (evt) {
+  const onUploadFormSubmit = function (evt) {
     evt.preventDefault();
 
     window.validate.checkHashtags();
@@ -72,12 +72,12 @@
     }
   };
 
-  let onUploadSuccess = function () {
+  const onUploadSuccess = function () {
     uploadCancel.click();
     window.popup.renderPopup(`success`);
   };
 
-  let onUploadError = function (errorMessage) {
+  const onUploadError = function (errorMessage) {
     uploadCancel.click();
     window.popup.renderPopup(`error`, errorMessage);
   };
