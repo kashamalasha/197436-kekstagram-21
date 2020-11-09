@@ -1,10 +1,15 @@
 'use strict';
 
 (function () {
+  const imgUpload = document.querySelector(`.img-upload`);
 
-  let imgUpload = document.querySelector(`.img-upload`);
+  const SCALE_FACTOR_REGEX = /(\d+)/;
+  const Zoom = {
+    STEP: 25,
+    LIMIT: 100
+  };
 
-  let form = {
+  const form = {
     imgUploadPreview: imgUpload.querySelector(`.img-upload__preview img`),
     effectSlider: imgUpload.querySelector(`.img-upload__effect-level`),
     effectLevelPin: imgUpload.querySelector(`.effect-level__pin`),
@@ -14,54 +19,53 @@
     scaleValue: imgUpload.querySelector(`.scale__control--value`)
   };
 
-  const setScaleFactor = function (evt) {
-    const REGEX = /(\d+)/;
-    let value = parseInt(form.scaleValue.value.match(REGEX)[0], 10);
+  const setScaleFactor = (evt) => {
+    let value = parseInt(form.scaleValue.value.match(SCALE_FACTOR_REGEX)[0], 10);
 
     if (evt) {
       switch (true) {
         case evt.target.classList.contains(`scale__control--bigger`):
-          value += 25;
+          value += Zoom.STEP;
           break;
         case evt.target.classList.contains(`scale__control--smaller`):
-          value -= 25;
+          value -= Zoom.STEP;
           break;
       }
     } else {
-      value = 100;
+      value = Zoom.LIMIT;
     }
 
-    if (value > 100) {
-      value = 100;
-    } else if (value < 25) {
-      value = 25;
+    if (value > Zoom.LIMIT) {
+      value = Zoom.LIMIT;
+    } else if (value < Zoom.STEP) {
+      value = Zoom.STEP;
     }
 
     form.scaleValue.value = `${value} %`;
     form.imgUploadPreview.style.transform = `scale(${value / 100})`;
   };
 
-  const getCurrentPinPosition = function () {
-    let position = {
+  const getCurrentPinPosition = () => {
+    const position = {
       width: form.effectLevelLine.clientWidth,
       depth: form.effectLevelDepth.clientWidth
     };
     return position.depth / position.width;
   };
 
-  const setMaxPinPosition = function () {
-    let maxPinPosition = form.effectLevelLine.clientWidth;
+  const setMaxPinPosition = () => {
+    const maxPinPosition = form.effectLevelLine.clientWidth;
     form.effectLevelPin.style.left = `${maxPinPosition}px`;
     form.effectLevelDepth.style.width = `${maxPinPosition}px`;
     form.effectLevelValue.value = `100`;
   };
 
-  const setEffectIntencity = function () {
-    let pinPosition = getCurrentPinPosition();
-    let percentValue = (pinPosition.toFixed(2) * 100);
-    let intervalZeroOne = pinPosition.toFixed(1);
-    let intervalZeroThree = (3 / 100) * (pinPosition.toFixed(2) * 100);
-    let intervalOneThree = (2 / 100) * (pinPosition.toFixed(2) * 100) + 1;
+  const onSetEffectIntencity = () => {
+    const pinPosition = getCurrentPinPosition();
+    const percentValue = (pinPosition.toFixed(2) * 100);
+    const intervalZeroOne = pinPosition.toFixed(1);
+    const intervalZeroThree = (3 / 100) * (pinPosition.toFixed(2) * 100);
+    const intervalOneThree = (2 / 100) * (pinPosition.toFixed(2) * 100) + 1;
 
     switch (true) {
       case form.imgUploadPreview.classList.contains(`effects__preview--chrome`):
@@ -86,12 +90,12 @@
     form.effectLevelValue.value = percentValue;
   };
 
-  const resetEffect = function () {
+  const resetEffect = () => {
     form.imgUploadPreview.className = ``;
     form.imgUploadPreview.style.filter = ``;
   };
 
-  const setEffectStyle = function (target) {
+  const setEffectStyle = (target) => {
     switch (true) {
       case target.matches(`#effect-chrome`):
         resetEffect();
@@ -123,19 +127,19 @@
         form.effectSlider.classList.add(`hidden`);
         form.effectLevelValue.value = ``;
     }
-    form.effectLevelPin.addEventListener(`mouseup`, setEffectIntencity);
+    form.effectLevelPin.addEventListener(`mouseup`, onSetEffectIntencity);
   };
 
-  const onEffectsChange = function (evt) {
+  const onEffectsChange = (evt) => {
     setEffectStyle(evt.target);
     setMaxPinPosition();
-    setEffectIntencity();
+    onSetEffectIntencity();
   };
 
   window.effects = {
     form,
     onEffectsChange,
-    setEffectIntencity,
+    onSetEffectIntencity,
     setScaleFactor,
     resetEffect
   };

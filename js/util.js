@@ -12,40 +12,40 @@
     }
   };
 
-  const getRandomInt = function (min, max) {
+  const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const getRandomFromArray = function (arr) {
+  const getRandomFromArray = (arr) => {
     return arr[getRandomInt(0, arr.length - 1)];
   };
 
-  const getShuffledArray = function (arr) {
-    const randomComparator = function () {
+  const getShuffledArray = (arr) => {
+    const randomComparator = () => {
       return 0.5 - Math.random();
     };
     return arr.slice().sort(randomComparator);
   };
 
-  const onEscPress = function (evt, action) {
+  const onEscPress = (evt, action) => {
     if (evt.key === Keys.ESCAPE.keyName) {
       evt.preventDefault();
       action();
     }
   };
 
-  const onEnterPress = function (evt, action) {
+  const onEnterPress = (evt, action) => {
     if (evt.key === Keys.ENTER.keyName) {
       action(evt);
     }
   };
 
-  const debounce = function (callback) {
+  const debounce = (callback) => {
     let lastTimeout = null;
 
-    return function (...args) {
+    return (...args) => {
       if (lastTimeout) {
         window.clearTimeout(lastTimeout);
       }

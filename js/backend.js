@@ -13,11 +13,11 @@
     LOAD: `https://21.javascript.pages.academy/kekstagram/data`
   };
 
-  const createRequest = function (method, url, onLoad, onError) {
+  const createRequest = (method, url, onLoad, onError) => {
     let xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
-    xhr.addEventListener(`load`, function () {
+    xhr.addEventListener(`load`, () => {
       switch (xhr.status) {
         case StatusCode.OK:
           onLoad(xhr.response);
@@ -27,11 +27,11 @@
       }
     });
 
-    xhr.addEventListener(`error`, function () {
+    xhr.addEventListener(`error`, () => {
       onError(`Ошибка соединения`);
     });
 
-    xhr.addEventListener(`timeout`, function () {
+    xhr.addEventListener(`timeout`, () => {
       onError(`Таймаут: ${xhr.timeout} мс.`);
     });
 
@@ -41,12 +41,12 @@
     return xhr;
   };
 
-  const load = function (onSuccess, onError) {
+  const load = (onSuccess, onError) => {
     let xhr = createRequest(`GET`, Url.LOAD, onSuccess, onError);
     xhr.send();
   };
 
-  const save = function (data, onSuccess, onError) {
+  const save = (data, onSuccess, onError) => {
     let xhr = createRequest(`POST`, Url.SAVE, onSuccess, onError);
     xhr.send(data);
   };

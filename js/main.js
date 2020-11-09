@@ -2,13 +2,13 @@
 
 (function () {
 
-  const onSuccess = function (arr) {
-    window.thumbnails.initialPhotos = arr;
-    window.thumbnails.renderPhotos(arr);
-    window.filter.showFilters();
+  const onSuccess = (loadedPhotosArray) => {
+    window.thumbnails.initialPhotos = loadedPhotosArray;
+    window.thumbnails.renderPhotos(loadedPhotosArray);
+    window.filter.show();
   };
 
-  const onError = function (errorMessage) {
+  const onError = (errorMessage) => {
     window.popup.renderPopup(`error`, errorMessage, `Закрыть`);
   };
 

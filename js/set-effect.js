@@ -2,17 +2,17 @@
 
 (function () {
 
-  window.effects.form.effectLevelPin.addEventListener(`mousedown`, function (evt) {
+  window.effects.form.effectLevelPin.addEventListener(`mousedown`, (evt) => {
     evt.preventDefault();
 
+    const lineWidth = window.effects.form.effectLevelLine.clientWidth;
     let startCoords = {
       x: evt.clientX,
     };
 
-    let lineWidth = window.effects.form.effectLevelLine.clientWidth;
     let isDragged = false;
 
-    const onMouseMove = function (moveEvt) {
+    const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
 
       isDragged = true;
@@ -25,7 +25,7 @@
         x: moveEvt.clientX,
       };
 
-      let pointerPosition = window.effects.form.effectLevelPin.offsetLeft - shift.x;
+      const pointerPosition = window.effects.form.effectLevelPin.offsetLeft - shift.x;
 
       if (pointerPosition >= 0) {
         if (pointerPosition === 0) {
@@ -35,18 +35,18 @@
           window.effects.form.effectLevelPin.style.left = `${pointerPosition}px`;
           window.effects.form.effectLevelDepth.style.width = `${pointerPosition}px`;
         }
-        window.effects.setEffectIntencity(moveEvt);
+        window.effects.onSetEffectIntencity(moveEvt);
       }
     };
 
-    const onMouseUp = function (upEvt) {
+    const onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
 
       if (isDragged) {
-        const onClickPreventDefault = function (clickEvt) {
+        const onClickPreventDefault = (clickEvt) => {
           clickEvt.preventDefault();
           window.effects.form.effectLevelPin.removeEventListener(`click`, onClickPreventDefault);
         };
