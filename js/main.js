@@ -1,17 +1,13 @@
 'use strict';
 
-(function () {
+const onSuccess = (loadedPhotosArray) => {
+  window.thumbnails.initialPhotos = loadedPhotosArray;
+  window.thumbnails.renderPhotos(loadedPhotosArray);
+  window.filter.show();
+};
 
-  const onSuccess = function (arr) {
-    window.thumbnails.initialPhotos = arr;
-    window.thumbnails.renderPhotos(arr);
-    window.filter.showFilters();
-  };
+const onError = (errorMessage) => {
+  window.popup.renderPopup(`error`, errorMessage, `Закрыть`);
+};
 
-  const onError = function (errorMessage) {
-    window.popup.renderPopup(`error`, errorMessage, `Закрыть`);
-  };
-
-  window.backend.load(onSuccess, onError);
-
-})();
+window.backend.load(onSuccess, onError);

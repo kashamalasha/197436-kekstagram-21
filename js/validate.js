@@ -1,57 +1,51 @@
 'use strict';
 
-(function () {
+const HASHTAG_REGEX = /^#[a-zA-Zа-яА-Я|\d]+$/;
 
-  const HASHTAG_REGEX = /^#[a-zA-Zа-яА-Я|\d]+$/;
-  const HashtagParams = {
-    MAX_TAGS: 5,
-    MIN_LENGTH: 1,
-    MAX_LENGTH: 20
-  };
+const HashtagParams = {
+  MAX_TAGS: 5,
+  MIN_LENGTH: 1,
+  MAX_LENGTH: 20
+};
 
-  let imgUpload = document.querySelector(`.img-upload`);
+const imgUpload = document.querySelector(`.img-upload`);
+const hashtagInput = imgUpload.querySelector(`.text__hashtags`);
 
-  let form = {
-    hashtags: imgUpload.querySelector(`.text__hashtags`)
-  };
+const hasDuplicates = (arr) => {
+  return new Set(arr).size !== arr.length;
+};
 
-  const hasDuplicates = function (arr) {
-    return new Set(arr).size !== arr.length;
-  };
-
-  const checkHashtags = function () {
-    if (form.hashtags.value) {
-      let tags = form.hashtags.value.trim().toLowerCase().split(` `);
-      if (tags.length > HashtagParams.MAX_TAGS) {
-        form.hashtags.setCustomValidity(`Количество хэштэгов не должно превышать 5`);
-      } else if (hasDuplicates(tags)) {
-        form.hashtags.setCustomValidity(`Хэштэги не должны повторяться`);
-      } else {
-        for (let tag of tags) {
-          if (tag.length === HashtagParams.MIN_LENGTH) {
-            form.hashtags.setCustomValidity(`Длина хэштэга "${tag}" не должна быть меньше ${HashtagParams.MIN_LENGTH}`);
-          } else if (tag.length > HashtagParams.MAX_LENGTH) {
-            form.hashtags.setCustomValidity(`Длина хэштэга "${tag}" не должна быть больше ${HashtagParams.MAX_LENGTH}`);
-          } else if (!HASHTAG_REGEX.test(tag)) {
-            form.hashtags.setCustomValidity(`Хэштэг "${tag}" не соответствует правилам оформления`);
-          }
-        }
-      }
+const checkHashtags = () => {
+  if (hashtagInput.value) {
+    const tags = hashtagInput.value.trim().toLowerCase().split(` `);
+    if (tags.length > HashtagParams.MAX_TAGS) {
+      hashtagInput.setCustomValidity(`Количество хэштэгов не должно превышать 5`);
+    } else if (hasDuplicates(tags)) {
+      hashtagInput.setCustomValidity(`Хэштэги не должны повторяться`);
     } else {
-      form.hashtags.setCustomValidity(``);
+      tags.forEach((tag) => {
+        if (tag.length === HashtagParams.MIN_LENGTH) {
+          hashtagInput.setCustomValidity(`Длина хэштэга "${tag}" не должна быть меньше ${HashtagParams.MIN_LENGTH}`);
+        } else if (tag.length > HashtagParams.MAX_LENGTH) {
+          hashtagInput.setCustomValidity(`Длина хэштэга "${tag}" не должна быть больше ${HashtagParams.MAX_LENGTH}`);
+        } else if (!HASHTAG_REGEX.test(tag)) {
+          hashtagInput.setCustomValidity(`Хэштэг "${tag}" не соответствует правилам оформления`);
+        }
+      });
     }
-    form.hashtags.reportValidity();
-  };
+  } else {
+    hashtagInput.setCustomValidity(``);
+  }
+  hashtagInput.reportValidity();
+};
 
-  const clearValidity = function () {
-    form.hashtags.setCustomValidity(``);
-    form.hashtags.reportValidity();
-    form.hashtags.classList.remove(`text--errors`);
-  };
+const clearHashtagValidity = () => {
+  hashtagInput.setCustomValidity(``);
+  hashtagInput.reportValidity();
+  hashtagInput.classList.remove(`text--errors`);
+};
 
-  window.validate = {
-    checkHashtags,
-    clearValidity
-  };
-
-})();
+window.validate = {
+  checkHashtags,
+  clearHashtagValidity
+};
