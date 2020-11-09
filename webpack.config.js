@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require(`path`);
 
 module.exports = {
   entry: [
@@ -16,7 +16,7 @@ module.exports = {
   ],
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "js"),
+    path: path.resolve(__dirname),
     iife: true
   },
   devtool: false
