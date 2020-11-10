@@ -1,10 +1,14 @@
 'use strict';
 
+const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`, `bmp`];
+
 const uploadStart = document.querySelector(`#upload-file`);
 const uploadImgOverlay = document.querySelector(`.img-upload__overlay`);
 const uploadCancel = document.querySelector(`#upload-cancel`);
 const imgUpload = document.querySelector(`.img-upload`);
 const formUpload = imgUpload.querySelector(`.img-upload__form`);
+const uploadPreview = imgUpload.querySelector(`.img-upload__preview img`);
+const effectsPreview = uploadImgOverlay.querySelectorAll(`.effects__preview`);
 
 const form = {
   hashtags: formUpload.querySelector(`.text__hashtags`),
@@ -85,7 +89,22 @@ const onUploadError = (errorMessage) => {
 };
 
 uploadStart.addEventListener(`change`, function () {
-  openUpload();
+  const file = uploadStart.files[0];
+  const matches = FILE_TYPES.some((type) => file.type.endsWith(type));
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener(`load`, () => {
+      uploadPreview.src = reader.result;
+
+      effectsPreview.forEach((effect) => {
+        effect.style.backgroundImage = `url('${reader.result}')`;
+      });
+    });
+
+    reader.readAsDataURL(file);
+    openUpload();
+  }
 });
 
 uploadCancel.addEventListener(`click`, function () {
