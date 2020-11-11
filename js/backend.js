@@ -12,7 +12,7 @@ const Url = {
 };
 
 const createRequest = (method, url, onLoad, onError) => {
-  let xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, () => {
@@ -40,12 +40,12 @@ const createRequest = (method, url, onLoad, onError) => {
 };
 
 const load = (onSuccess, onError) => {
-  let xhr = createRequest(`GET`, Url.LOAD, onSuccess, onError);
+  const xhr = createRequest(`GET`, Url.LOAD, onSuccess, onError);
   xhr.send();
 };
 
 const save = (data, onSuccess, onError) => {
-  let xhr = createRequest(`POST`, Url.SAVE, onSuccess, onError);
+  const xhr = createRequest(`POST`, Url.SAVE, onSuccess, onError);
   xhr.send(data);
 };
 

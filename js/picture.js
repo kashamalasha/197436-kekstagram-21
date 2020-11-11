@@ -20,7 +20,7 @@ const onShowMoreCommentsClick = () => {
       hiddenComments[i].classList.remove(`hidden`);
     }
 
-    if (cutoff < DEFAULT_COMMENTS_QUANTITY) {
+    if (cutoff <= DEFAULT_COMMENTS_QUANTITY) {
       commentsLoader.classList.add(`hidden`);
     }
 
