@@ -1,13 +1,12 @@
 'use strict';
 
-const imgUpload = document.querySelector(`.img-upload`);
-
 const SCALE_FACTOR_REGEX = /(\d+)/;
 const Zoom = {
   STEP: 25,
   LIMIT: 100
 };
 
+const imgUpload = document.querySelector(`.img-upload`);
 const form = {
   imgUploadPreview: imgUpload.querySelector(`.img-upload__preview img`),
   effectSlider: imgUpload.querySelector(`.img-upload__effect-level`),
