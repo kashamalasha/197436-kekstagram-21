@@ -20,7 +20,7 @@ const onShowMoreCommentsClick = () => {
       hiddenComments[i].classList.remove(`hidden`);
     }
 
-    if (cutoff < DEFAULT_COMMENTS_QUANTITY) {
+    if (cutoff <= DEFAULT_COMMENTS_QUANTITY) {
       commentsLoader.classList.add(`hidden`);
     }
 
@@ -30,7 +30,7 @@ const onShowMoreCommentsClick = () => {
 
 const renderComments = (commentsArray) => {
   const commentElement = comments.querySelector(`.social__comment`);
-  let fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
   commentsArray.forEach((comment, index) => {
     const record = commentElement.cloneNode(true);

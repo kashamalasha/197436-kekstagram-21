@@ -47,7 +47,7 @@ const renderPopup = (type, message, buttonTitle) => {
 
   popup.button.focus();
 
-  popup.button.addEventListener(`keydown`, function (evt) {
+  popup.button.addEventListener(`keydown`, (evt) => {
     window.util.onEnterPress(evt, onPopupCloseClick);
   });
 
