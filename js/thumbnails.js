@@ -23,7 +23,7 @@ const renderPhoto = (obj) => {
 
 const renderPhotos = (photosArray) => {
   const previousThumbnails = thumbnails.querySelectorAll(`.picture`);
-  let fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
   if (previousThumbnails) {
     previousThumbnails.forEach((thumbnail) => {
@@ -46,14 +46,14 @@ const onPictureEnterPress = (evt) => {
   }
 };
 
-thumbnails.addEventListener(`click`, function (evt) {
+thumbnails.addEventListener(`click`, (evt) => {
   if (evt.target.className === `picture__img`) {
     window.picture.showPreview(evt.target.parentNode,
         window.thumbnails.filteredPhotos ? window.thumbnails.filteredPhotos : window.thumbnails.initialPhotos);
   }
 });
 
-thumbnails.addEventListener(`keydown`, function (evt) {
+thumbnails.addEventListener(`keydown`, (evt) => {
   window.util.onEnterPress(evt, onPictureEnterPress);
 });
 

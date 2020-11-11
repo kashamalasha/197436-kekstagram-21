@@ -48,7 +48,7 @@ const debounce = (callback) => {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
-    lastTimeout = window.setTimeout(function () {
+    lastTimeout = window.setTimeout(() => {
       callback(...args);
     }, DEBOUNCE_INTERVAL);
   };

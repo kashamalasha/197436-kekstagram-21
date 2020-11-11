@@ -16,9 +16,7 @@ const getFilteredPhotos = (filterType) => {
       const randomArray = window.util.getShuffledArray(window.thumbnails.initialPhotos);
       return randomArray.slice(0, RANDOM_PHOTO_QUANTITY);
     case `filter-discussed`:
-      return window.thumbnails.initialPhotos.slice().sort(function (left, right) {
-        return right.comments.length - left.comments.length;
-      });
+      return window.thumbnails.initialPhotos.slice().sort((left, right) => right.comments.length - left.comments.length);
     default:
       return window.thumbnails.initialPhotos;
   }
@@ -31,9 +29,7 @@ const filterPhotos = window.util.debounce((evt) => {
 
 const show = () => {
   filterForm.parentElement.classList.remove(`img-filters--inactive`);
-  filterForm.addEventListener(`click`, function (evt) {
-    filterPhotos(evt);
-  });
+  filterForm.addEventListener(`click`, (evt) => filterPhotos(evt));
 };
 
 window.filter = {

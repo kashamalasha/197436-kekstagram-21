@@ -88,7 +88,7 @@ const onUploadError = (errorMessage) => {
   window.popup.renderPopup(`error`, errorMessage);
 };
 
-uploadStart.addEventListener(`change`, function () {
+uploadStart.addEventListener(`change`, () => {
   const file = uploadStart.files[0];
   const matches = FILE_TYPES.some((type) => file.type.endsWith(type));
   if (matches) {
@@ -107,14 +107,14 @@ uploadStart.addEventListener(`change`, function () {
   }
 });
 
-uploadCancel.addEventListener(`click`, function () {
+uploadCancel.addEventListener(`click`, () => {
   closeUpload();
 });
 
-uploadCancel.addEventListener(`keydown`, function (evt) {
+uploadCancel.addEventListener(`keydown`, (evt) => {
   window.util.onEnterPress(evt, closeUpload);
 });
 
-form.submitButton.addEventListener(`keydown`, function (evt) {
+form.submitButton.addEventListener(`keydown`, (evt) => {
   window.util.onEnterPress(evt, closeUpload);
 });

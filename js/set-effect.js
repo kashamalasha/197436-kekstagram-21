@@ -4,7 +4,7 @@ window.effects.form.effectLevelPin.addEventListener(`mousedown`, (evt) => {
   evt.preventDefault();
 
   const lineWidth = window.effects.form.effectLevelLine.clientWidth;
-  let startCoords = {
+  const startCoords = {
     x: evt.clientX,
   };
 
@@ -15,7 +15,7 @@ window.effects.form.effectLevelPin.addEventListener(`mousedown`, (evt) => {
 
     isDragged = true;
 
-    let shift = {
+    const shift = {
       x: startCoords.x - moveEvt.clientX,
     };
 

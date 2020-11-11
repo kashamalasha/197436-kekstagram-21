@@ -30,7 +30,7 @@ const onShowMoreCommentsClick = () => {
 
 const renderComments = (commentsArray) => {
   const commentElement = comments.querySelector(`.social__comment`);
-  let fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
   commentsArray.forEach((comment, index) => {
     const record = commentElement.cloneNode(true);
